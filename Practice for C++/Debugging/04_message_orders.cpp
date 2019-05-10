@@ -16,6 +16,16 @@ public:
     const string& get_text() {
         return text;
     }
+    
+    // friend bool operator <(const Message &a, const Message &b){
+    //     if(a.current_id<b.current_id){
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    // }
+    
     bool operator <(const Message &a){
         if(current_id<a.current_id){
             return true;
