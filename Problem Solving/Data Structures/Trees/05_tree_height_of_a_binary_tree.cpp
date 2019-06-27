@@ -1,65 +1,74 @@
 //https://www.hackerrank.com/challenges/tree-height-of-a-binary-tree/problem
 
-class Node:
-    def __init__(self, info): 
-        self.info = info  
-        self.left = None  
-        self.right = None 
-        self.level = None 
+#include <bits/stdc++.h>
 
-    def __str__(self):
-        return str(self.info) 
+using namespace std;
 
-class BinarySearchTree:
-    def __init__(self): 
-        self.root = None
+class Node {
+    public:
+        int data;
+        Node *left;
+        Node *right;
+        Node(int d) {
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
 
-    def create(self, val):  
-        if self.root == None:
-            self.root = Node(val)
-        else:
-            current = self.root
-         
-            while True:
-                if val < current.info:
-                    if current.left:
-                        current = current.left
-                    else:
-                        current.left = Node(val)
-                        break
-                elif val > current.info:
-                    if current.right:
-                        current = current.right
-                    else:
-                        current.right = Node(val)
-                        break
-                else:
-                    break
+class Solution {
+    public:
+  		Node* insert(Node* root, int data) {
+            if(root == NULL) {
+                return new Node(data);
+            } else {
+                Node* cur;
+                if(data <= root->data) {
+                    cur = insert(root->left, data);
+                    root->left = cur;
+                } else {
+                    cur = insert(root->right, data);
+                    root->right = cur;
+               }
 
-# Enter your code here. Read input from STDIN. Print output to STDOUT
-'''
-class Node:
-      def __init__(self,info): 
-          self.info = info  
-          self.left = None  
-          self.right = None 
-           
+               return root;
+           }
+        }
+/*The tree node has data, left child and right child 
+class Node {
+    int data;
+    Node* left;
+    Node* right;
+};
 
-       // this is a node of the tree , which contains info as data, left , right
-'''
-def height(root):
-    if(root==None):
-        return -1
-    return max(height(root.left),height(root.right))+1
+*/
+    int height(Node* root) {
+        if(root == NULL){
+            return -1;
+        }
+        return 1+max(height(root->left),height(root->right));
+    }
 
+}; //End of Solution
 
+int main() {
+  
+    Solution myTree;
+    Node* root = NULL;
+    
+    int t;
+    int data;
 
-tree = BinarySearchTree()
-t = int(input())
+    std::cin >> t;
 
-arr = list(map(int, input().split()))
+    while(t-- > 0) {
+        std::cin >> data;
+        root = myTree.insert(root, data);
+    }
+  
+    int height = myTree.height(root);
+    
+  	std::cout << height;
 
-for i in range(t):
-    tree.create(arr[i])
-
-print(height(tree.root))
+    return 0;
+}
